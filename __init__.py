@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# vim: set encoding=utf-8 tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 #########################################################################
 #  Copyright 2016 Thomas Brandstetter           thomas@brandstetter.co.at
 #########################################################################
@@ -31,9 +33,6 @@ import urllib.request
 logger = logging.getLogger('Netatmo')
 
 # Common definitions
-ALLOW_MULTIINSTANCE = False
-PLUGIN_VERSION = "1.2.1"
-
 _BASE_URL       = "https://api.netatmo.net/"
 _AUTH_REQ       = _BASE_URL + "oauth2/token"
 _GETUSER_REQ    = _BASE_URL + "api/getuser"
@@ -42,8 +41,11 @@ _GETMEASURE_REQ = _BASE_URL + "api/getmeasure"
 
 
 class ClientAuth(SmartPlugin):
-    "Request authentication and keep access token available through token method. Renew it automatically if necessary"
 
+    ALLOW_MULTIINSTANCE = False
+    PLUGIN_VERSION = "1.2.1"
+
+    # "Request authentication and keep access token available through token method. Renew it automatically if necessary"
     def __init__(self, authData):
 
         postParams = {
