@@ -26,11 +26,8 @@ import logging
 from lib.model.smartplugin import SmartPlugin
 import json
 import time
-
 import urllib.parse
 import urllib.request
-
-logger = logging.getLogger('Netatmo')
 
 # Common definitions
 _BASE_URL       = "https://api.netatmo.net/"
@@ -47,6 +44,7 @@ class ClientAuth(SmartPlugin):
 
     # "Request authentication and keep access token available through token method. Renew it automatically if necessary"
     def __init__(self, authData):
+        self.logger = logging.getLogger('Netatmo')
 
         postParams = {
                 "grant_type" : "password",
@@ -204,7 +202,7 @@ class Netatmo():
         }
 
         if not self._client_id or not self._client_secret or not self._email or not self._password:
-            logger.error("Netatmo: Bad configuration")
+            self.logger.error("Netatmo: Bad configuration")
 
     def run(self):
         self.alive = True
@@ -220,7 +218,7 @@ class Netatmo():
                 self._items.append([item, item_key])
                 return self.update_item
             else:
-                logger.warn('invalid key {0} configured', item_key)
+                self.logger.warn('invalid key {0} configured', item_key)
         return None
 
     def parse_logic(self, logic):
